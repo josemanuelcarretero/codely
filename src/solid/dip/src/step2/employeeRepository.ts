@@ -1,4 +1,4 @@
-import Employee from '@codely/solid/dip/step2/employee';
+import Employee from '@codely/step2/employee';
 
 export default interface EmployeeRepository {
   findEmployeesBornOn(monthDay: number): Employee[];

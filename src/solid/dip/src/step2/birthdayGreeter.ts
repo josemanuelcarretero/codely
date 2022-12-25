@@ -1,12 +1,13 @@
-import Clock from '@codely/solid/dip/step1/clock';
-import Email from '@codely/solid/dip/step1/email';
-import EmailSender from '@codely/solid/dip/step1/emailSender';
-import Employee from '@codely/solid/dip/step1/employee';
-import EmployeeRepository from '@codely/solid/dip/step1/employeeRepository';
+import Clock from '@codely/step2/clock';
+import Email from '@codely/step2/email';
+import EmailSender from '@codely/step2/emailSender';
+import Employee from '@codely/step2/employee';
+import EmployeeRepository from '@codely/step2/employeeRepository';
 
 export default class BirthdayGreeter {
   constructor(
     private employeeRepository: EmployeeRepository,
+    private emailSender: EmailSender,
     private clock: Clock,
   ) {}
 
@@ -14,7 +15,7 @@ export default class BirthdayGreeter {
     const today = this.clock.monthDay();
     this.employeeRepository.findEmployeesBornOn(today).forEach((employee) => {
       const email = this.emailFor(employee);
-      new EmailSender().send(email);
+      this.emailSender.send(email);
     });
   }
 

@@ -1,4 +1,4 @@
-import Bird from '@codely/solid/lsp/bird';
+import Bird from '@codely/bird';
 
 export default class Parrot implements Bird {
   lastTweet: string;

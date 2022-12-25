@@ -1,4 +1,4 @@
-import Bird from '@codely/solid/lsp/bird';
+import Bird from '@codely/bird';
 
 export class Sparrow implements Bird {
   tweet(): void {
