@@ -1,8 +1,8 @@
-import Clock from '@codely/dip/step1/clock';
-import Email from '@codely/dip/step1/email';
-import EmailSender from '@codely/dip/step1/emailSender';
-import Employee from '@codely/dip/step1/employee';
-import EmployeeRepository from '@codely/dip/step1/employeeRepository';
+import Clock from '@codely/solid/dip/step1/clock';
+import Email from '@codely/solid/dip/step1/email';
+import EmailSender from '@codely/solid/dip/step1/emailSender';
+import Employee from '@codely/solid/dip/step1/employee';
+import EmployeeRepository from '@codely/solid/dip/step1/employeeRepository';
 
 export default class BirthdayGreeter {
   constructor(

@@ -1,4 +1,4 @@
-import Animal from '@codely/isp/step1/animal';
+import Animal from '@codely/solid/isp/step1/animal';
 
 export default class Bird implements Animal {
   bark() {}

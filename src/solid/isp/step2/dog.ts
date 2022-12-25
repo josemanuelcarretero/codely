@@ -1,5 +1,5 @@
-import Barkable from '@codely/isp/step2/barkable';
-import Runnable from '@codely/isp/step2/runnable';
+import Barkable from '@codely/solid/isp/step2/barkable';
+import Runnable from '@codely/solid/isp/step2/runnable';
 
 export default class Dog implements Runnable, Barkable {
   run() {

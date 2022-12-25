@@ -1,4 +1,4 @@
-import Email from '@codely/dip/step1/email';
+import Email from '@codely/solid/dip/step1/email';
 
 export default class EmailSender {
   public send(email: Email): void {
