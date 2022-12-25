@@ -1,0 +1,24 @@
+{
+  "name": "codely",
+  "version": "0.0.0",
+  "description": "Repository to solve codely exercices",
+  "repository": "git@github.com:josemanuelcarretero/Codely.git",
+  "author": "Jose Manuel Carretero <josemanuelcarreterocuenca@gmail.com>",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint \"{src,test}/**/*.ts\" --fix"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.4",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-no-relative-import-paths": "^1.4.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "prettier": "^2.3.2"
+  }
+}
