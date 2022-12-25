@@ -1,4 +1,5 @@
-import { GildedRose, Item } from '../src/gildedRose';
+import { GildedRose } from '../src/gildedRose';
+import { Item } from '../src/item';
 
 const items = [
   new Item('+5 Dexterity Vest', 10, 20), //
@@ -24,7 +25,7 @@ for (let i = 0; i < days; i++) {
   console.log('-------- day ' + i + ' --------');
   console.log('name, sellIn, quality');
   items.forEach((element) => {
-    console.log(element.name + ' ' + element.sellIn + ' ' + element.quality);
+    console.log(element.toString());
   });
   console.log();
   gildedRose.updateQuality();

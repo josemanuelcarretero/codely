@@ -1,4 +1,5 @@
-import { GildedRose, Item } from '@codely/gildedRose';
+import { GildedRose } from '@codely/gildedRose';
+import { Item } from '@codely/item';
 import { expect } from 'chai';
 
 describe('Gilded Rose', () => {
