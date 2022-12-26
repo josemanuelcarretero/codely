@@ -13,38 +13,35 @@ export class GildedRose {
 
   updateQuality() {
     this.items.forEach((item) => {
-      if (item.name != AGED_BRIE && item.name != BACKSTAGE_PASSES) {
-        if (item.name != SULFURAS) {
-          this.decreaseQuality(item);
-        }
-      } else {
-        if (item.quality < 50) {
+      switch (item.name) {
+        case AGED_BRIE:
           this.increaseQuality(item);
-          if (item.name == BACKSTAGE_PASSES) {
-            if (item.sellIn < 11) {
-              this.increaseQuality(item);
-            }
-            if (item.sellIn < 6) {
-              this.increaseQuality(item);
-            }
+          this.decreaseSellIn(item);
+          if (item.sellIn < 0) {
+            this.increaseQuality(item);
           }
-        }
-      }
-      if (item.name != SULFURAS) {
-        this.decreaseSellIn(item);
-      }
-      if (item.sellIn < 0) {
-        if (item.name != AGED_BRIE) {
-          if (item.name != BACKSTAGE_PASSES) {
-            if (item.name != SULFURAS) {
-              this.decreaseQuality(item);
-            }
-          } else {
+          break;
+        case BACKSTAGE_PASSES:
+          this.increaseQuality(item);
+          if (item.sellIn < 11) {
+            this.increaseQuality(item);
+          }
+          if (item.sellIn < 6) {
+            this.increaseQuality(item);
+          }
+          this.decreaseSellIn(item);
+          if (item.sellIn < 0) {
             this.resetQuality(item);
           }
-        } else {
-          this.increaseQuality(item);
-        }
+          break;
+        case SULFURAS:
+          break;
+        default:
+          this.decreaseQuality(item);
+          this.decreaseSellIn(item);
+          if (item.sellIn < 0) {
+            this.decreaseQuality(item);
+          }
       }
     });
 
