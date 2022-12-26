@@ -1,4 +1,4 @@
-import { pathsToModuleNameMapper } from 'ts-jest/utils';
+import { pathsToModuleNameMapper } from 'ts-jest';
 
 const { compilerOptions } = require('./tsconfig');
 
