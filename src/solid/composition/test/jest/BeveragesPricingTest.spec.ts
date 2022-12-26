@@ -1,10 +1,8 @@
 import { Coffee } from '@codely/Coffee';
-import { CoffeeWithMilk } from '@codely/CoffeeWithMilk';
-import { CoffeeWithMilkAndCream } from '@codely/CoffeeWithMilkAndCream';
 import { HotChocolate } from '@codely/HotChocolate';
-import { HotChocolateWithCream } from '@codely/HotChocolateWithCream';
+import { WithCream } from '@codely/suplements/withCream';
+import { WithMilk } from '@codely/suplements/withMilk';
 import { Tea } from '@codely/Tea';
-import { TeaWithMilk } from '@codely/TeaWithMilk';
 
 describe('Beverages Pricing Test', () => {
   it('computes coffee price', () => {
@@ -23,22 +21,22 @@ describe('Beverages Pricing Test', () => {
   });
 
   it('computes tea with milk price', () => {
-    const teaWithMilk = new TeaWithMilk();
+    const teaWithMilk = new WithMilk(new Tea());
     expect(teaWithMilk.price()).toBe(160);
   });
 
   it('computes coffee with milk price', () => {
-    const coffeeWithMilk = new CoffeeWithMilk();
+    const coffeeWithMilk = new WithMilk(new Coffee());
     expect(coffeeWithMilk.price()).toBe(130);
   });
 
   it('computes coffee with milk and cream price', () => {
-    const coffeeWithMilkAndCream = new CoffeeWithMilkAndCream();
+    const coffeeWithMilkAndCream = new WithCream(new WithMilk(new Coffee()));
     expect(coffeeWithMilkAndCream.price()).toBe(145);
   });
 
   it('computes hot chocolate with cream price', () => {
-    const hotChocolateWithCream = new HotChocolateWithCream();
+    const hotChocolateWithCream = new WithCream(new HotChocolate());
     expect(hotChocolateWithCream.price()).toBe(160);
   });
 });
