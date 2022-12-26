@@ -7,5 +7,5 @@ module.exports = {
     "source-map-support/register"
   ],
   recursive: true,
-  spec: "test/mocha/*.spec.ts"
+  spec: "test/mocha/**/*.spec.ts"
 }

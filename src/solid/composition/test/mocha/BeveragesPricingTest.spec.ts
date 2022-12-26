@@ -1,5 +1,6 @@
 import { Coffee } from '@codely/Coffee';
 import { HotChocolate } from '@codely/HotChocolate';
+import { WithCinnamon } from '@codely/suplements/withCinnamon';
 import { WithCream } from '@codely/suplements/withCream';
 import { WithMilk } from '@codely/suplements/withMilk';
 import { Tea } from '@codely/Tea';
@@ -39,5 +40,17 @@ describe('Beverages Pricing Test', () => {
   it('computes hot chocolate with cream price', () => {
     const hotChocolateWithCream = new WithCream(new HotChocolate());
     expect(hotChocolateWithCream.price()).to.be.equal(160);
+  });
+
+  it('computes hot chocolate with cinnamon price', () => {
+    const hotChocolateWithCream = new WithCinnamon(new HotChocolate());
+    expect(hotChocolateWithCream.price()).to.be.equal(150);
+  });
+
+  it('computes hot chocolate with cinnamon and cream price', () => {
+    const hotChocolateWithCream = new WithCream(
+      new WithCinnamon(new HotChocolate()),
+    );
+    expect(hotChocolateWithCream.price()).to.be.equal(165);
   });
 });
