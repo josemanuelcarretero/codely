@@ -7,7 +7,7 @@ This is the Gilded Rose kata in TypeScript.
 Install dependencies
 
 ```sh
-npm install
+yarn install
 ```
 
 ## Running app
