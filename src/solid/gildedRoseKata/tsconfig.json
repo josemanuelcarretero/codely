@@ -23,7 +23,9 @@
   },
   "include": [
     "./src",
-    "./test",
-    "./"
-  ]
+    "./test"
+  ],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
 }
