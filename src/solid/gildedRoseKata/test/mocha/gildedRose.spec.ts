@@ -3,10 +3,26 @@ import { Item } from '@codely/item';
 import { expect } from 'chai';
 
 describe('Gilded Rose', () => {
-  it('should foo', () => {
+  it('should create an instance', () => {
     const gildedRose = new GildedRose([new Item('foo', 0, 0)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].name).to.equal('foo');
+    expect(gildedRose).to.be.an.instanceOf(GildedRose);
+  });
+
+  it('should have items', () => {
+    const items = [new Item('foo', 0, 0)];
+    const gildedRose = new GildedRose(items);
+    expect(gildedRose.items).to.be.an('array');
+    expect(gildedRose.items).to.have.lengthOf(1);
+    expect(gildedRose.items[0]).to.be.an.instanceOf(Item);
+    expect(gildedRose.items[0].name).to.equal('foo');
+    expect(gildedRose.items[0].sellIn).to.equal(0);
+    expect(gildedRose.items[0].quality).to.equal(0);
+  });
+
+  it('should have no items', () => {
+    const gildedRose = new GildedRose();
+    expect(gildedRose.items).to.be.an('array');
+    expect(gildedRose.items).to.have.lengthOf(0);
   });
 
   it('should decrease sellIn value', () => {
@@ -43,6 +59,12 @@ describe('Gilded Rose', () => {
     const gildedRose = new GildedRose([new Item('Aged Brie', 5, 50)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).to.equal(50);
+  });
+
+  it('should increase quality 2 times of Aged Brie when sellIn is passed', () => {
+    const gildedRose = new GildedRose([new Item('Aged Brie', 0, 1)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).to.equal(3);
   });
 
   it('should never change Sulfuras', () => {
