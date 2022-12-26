@@ -1,110 +1,45 @@
+import { AbstractItemUpdaterFactory } from '@codely/abstractItemUpdaterFactory';
 import { GildedRose } from '@codely/gildedRose';
 import { Item } from '@codely/item';
-import { expect } from 'chai';
+import { ItemUpdater } from '@codely/itemUpdater';
+import { expect, use } from 'chai';
+import * as sinon from 'sinon';
+import * as sinonChai from 'sinon-chai';
 
 describe('Gilded Rose', () => {
+  class StubItemUpdater extends ItemUpdater {
+    update(): void {}
+  }
+  const item = new Item('whatever', 10, 25);
+  const stubItemUpdater: ItemUpdater = new StubItemUpdater(item);
+  class StubItemUpdaterFactory implements AbstractItemUpdaterFactory {
+    create(): ItemUpdater {
+      return stubItemUpdater;
+    }
+  }
+  const stubItemUpdaterFactory = new StubItemUpdaterFactory();
+
+  use(sinonChai);
+
+  const spyStubItemUpdater = sinon.spy(stubItemUpdater, 'update');
+  const spyStubItemUpdaterFactory = sinon.spy(stubItemUpdaterFactory, 'create');
+
+  const gildedRose = new GildedRose(stubItemUpdaterFactory);
+
   it('should create an instance', () => {
-    const gildedRose = new GildedRose([new Item('foo', 0, 0)]);
     expect(gildedRose).to.be.an.instanceOf(GildedRose);
   });
 
-  it('should have items', () => {
-    const items = [new Item('foo', 0, 0)];
-    const gildedRose = new GildedRose(items);
-    expect(gildedRose.items).to.be.an('array');
-    expect(gildedRose.items).to.have.lengthOf(1);
-    expect(gildedRose.items[0]).to.be.an.instanceOf(Item);
-    expect(gildedRose.items[0].name).to.equal('foo');
-    expect(gildedRose.items[0].sellIn).to.equal(0);
-    expect(gildedRose.items[0].quality).to.equal(0);
-  });
-
   it('should have no items', () => {
-    const gildedRose = new GildedRose();
-    expect(gildedRose.items).to.be.an('array');
-    expect(gildedRose.items).to.have.lengthOf(0);
+    const items = gildedRose.updateQuality();
+    expect(items).to.have.lengthOf(0);
   });
 
-  it('should decrease sellIn value', () => {
-    const gildedRose = new GildedRose([new Item('whatever', 10, 0)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].sellIn).to.equal(9);
-  });
-
-  it('should decrease quality value', () => {
-    const gildedRose = new GildedRose([new Item('whatever', 1, 10)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(9);
-  });
-
-  it('should decrease quality value twice as much when sellIn is passed', () => {
-    const gildedRose = new GildedRose([new Item('whatever', 0, 10)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(8);
-  });
-
-  it('should never have negative quality', () => {
-    const gildedRose = new GildedRose([new Item('whatever', 0, 0)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(0);
-  });
-
-  it('should increase quality of Aged Brie', () => {
-    const gildedRose = new GildedRose([new Item('Aged Brie', 5, 1)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(2);
-  });
-
-  it('should never have quality greater than 50', () => {
-    const gildedRose = new GildedRose([new Item('Aged Brie', 5, 50)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(50);
-  });
-
-  it('should increase quality 2 times of Aged Brie when sellIn is passed', () => {
-    const gildedRose = new GildedRose([new Item('Aged Brie', 0, 1)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(3);
-  });
-
-  it('should never change Sulfuras', () => {
-    const gildedRose = new GildedRose([
-      new Item('Sulfuras, Hand of Ragnaros', 0, 25),
-    ]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(25);
-    expect(items[0].sellIn).to.equal(0);
-  });
-
-  it('should increase quality of Backstage Passes by 1 if sellIn is greater than 10', () => {
-    const gildedRose = new GildedRose([
-      new Item('Backstage passes to a TAFKAL80ETC concert', 11, 20),
-    ]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(21);
-  });
-
-  it('should increase quality of Backstage Passes by 2 if sellIn is smaller than 10', () => {
-    const gildedRose = new GildedRose([
-      new Item('Backstage passes to a TAFKAL80ETC concert', 6, 20),
-    ]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(22);
-  });
-
-  it('should increase quality of Backstage Passes by 3 if sellIn is smaller than 5', () => {
-    const gildedRose = new GildedRose([
-      new Item('Backstage passes to a TAFKAL80ETC concert', 5, 20),
-    ]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(23);
-  });
-
-  it('should lose quality of Backstage Passes after sellIn passes', () => {
-    const gildedRose = new GildedRose([
-      new Item('Backstage passes to a TAFKAL80ETC concert', 0, 20),
-    ]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(0);
+  it('should call update method', () => {
+    gildedRose.updateQuality([item]);
+    expect(spyStubItemUpdater).to.have.been.calledOnce;
+    expect(spyStubItemUpdaterFactory).to.have.been.calledWith(item);
+    expect(spyStubItemUpdaterFactory).to.have.been.calledOnce;
+    expect(spyStubItemUpdaterFactory).to.have.returned(stubItemUpdater);
   });
 });

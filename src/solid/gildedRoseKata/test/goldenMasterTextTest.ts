@@ -1,5 +1,6 @@
 import { GildedRose } from '../src/gildedRose';
 import { Item } from '../src/item';
+import { ItemUpdaterFactory } from '../src/itemUpdaterFactory';
 
 const items = [
   new Item('+5 Dexterity Vest', 10, 20), //
@@ -14,7 +15,8 @@ const items = [
   new Item('Conjured Mana Cake', 3, 6),
 ];
 
-const gildedRose = new GildedRose(items);
+const itemUpdaterFactory = new ItemUpdaterFactory();
+const gildedRose = new GildedRose(itemUpdaterFactory);
 
 let days = 2;
 if (process.argv.length > 2) {
@@ -28,5 +30,5 @@ for (let i = 0; i < days; i++) {
     console.log(element.toString());
   });
   console.log();
-  gildedRose.updateQuality();
+  gildedRose.updateQuality(items);
 }
