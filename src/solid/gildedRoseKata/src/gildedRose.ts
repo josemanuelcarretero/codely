@@ -15,56 +15,69 @@ export class GildedRose {
     this.items.forEach((item) => {
       switch (item.name) {
         case AGED_BRIE:
-          this.increaseQuality(item);
           this.decreaseSellIn(item);
-          if (item.sellIn < 0) {
-            this.increaseQuality(item);
-          }
+          this.updateQualityAgedBrie(item);
           break;
         case BACKSTAGE_PASSES:
-          this.increaseQuality(item);
-          if (item.sellIn < 11) {
-            this.increaseQuality(item);
-          }
-          if (item.sellIn < 6) {
-            this.increaseQuality(item);
-          }
           this.decreaseSellIn(item);
-          if (item.sellIn < 0) {
-            this.resetQuality(item);
-          }
+          this.updateQualityBackstagePasses(item);
           break;
         case SULFURAS:
           break;
         default:
-          this.decreaseQuality(item);
           this.decreaseSellIn(item);
-          if (item.sellIn < 0) {
-            this.decreaseQuality(item);
-          }
+          this.updateQualityDefault(item);
+          break;
       }
     });
 
     return this.items;
   }
 
-  increaseQuality(item: Item) {
+  private increaseQuality(item: Item) {
     if (item.quality < 50) {
       item.quality = item.quality + 1;
     }
   }
 
-  decreaseQuality(item: Item) {
+  private decreaseQuality(item: Item) {
     if (item.quality > 0) {
       item.quality = item.quality - 1;
     }
   }
 
-  resetQuality(item: Item) {
+  private resetQuality(item: Item) {
     item.quality = 0;
   }
 
-  decreaseSellIn(item: Item) {
+  private decreaseSellIn(item: Item) {
     item.sellIn = item.sellIn - 1;
+  }
+
+  private updateQualityAgedBrie(item: Item) {
+    this.increaseQuality(item);
+    if (item.sellIn < 0) {
+      this.increaseQuality(item);
+    }
+  }
+
+  private updateQualityBackstagePasses(item: Item) {
+    this.increaseQuality(item);
+    if (item.sellIn < 10) {
+      this.increaseQuality(item);
+    }
+    if (item.sellIn < 5) {
+      this.increaseQuality(item);
+    }
+    if (item.sellIn < 0) {
+      this.resetQuality(item);
+    }
+  }
+
+  private updateQualityDefault(item: Item) {
+    this.decreaseQuality(item);
+    if (item.sellIn < 0) {
+      this.decreaseQuality(item);
+    }
   }
 }
